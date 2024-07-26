@@ -49,7 +49,7 @@ class PaintingController extends ChangeNotifier {
   /// Returns a [PaintedModel] instance representing the current state of the painting.
   PaintedModel get paintedModel => PaintedModel(
         mode: mode,
-        offsets: mode == PaintModeE.freeStyle ? offsets : [start, end],
+        offsets: mode == PaintModeE.freeStyle|| mode == PaintModeE.mosaic? offsets : [start, end],
         color: color,
         strokeWidth: strokeWidth,
         fill: fill,

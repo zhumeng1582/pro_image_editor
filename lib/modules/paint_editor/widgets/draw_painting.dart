@@ -102,6 +102,28 @@ class DrawPainting extends CustomPainter {
           }
         }
         break;
+      case PaintModeE.mosaic:
+        item.hit = false;
+        for (int i = 0; i < offsets.length - 1; i++) {
+          if (offsets[i] != null && offsets[i + 1] != null) {
+            if (_hitTestFreeStyle(
+              start: offsets[i]! * scale,
+              end: offsets[i + 1]! * scale,
+              position: position,
+              strokeHalfWidth: strokeHalfW,
+            )) {
+              item.hit = true;
+              break;
+            }
+          } else if (offsets[i] != null && offsets[i + 1] == null) {
+            // Check if the position is within touchTolerance of a point
+            if (offsets[i]!.distance * scale <= strokeHalfW) {
+              item.hit = true;
+              break;
+            }
+          }
+        }
+        break;
       case PaintModeE.rect:
         final rect =
             Rect.fromPoints(item.offsets[0]! * scale, item.offsets[1]! * scale);

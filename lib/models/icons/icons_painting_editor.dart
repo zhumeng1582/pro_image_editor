@@ -30,6 +30,7 @@ class IconsPaintingEditor {
 
   /// The icon for the freehand drawing tool.
   final IconData freeStyle;
+  final IconData mosaic;
 
   /// The icon for the arrow drawing tool.
   final IconData arrow;
@@ -89,6 +90,7 @@ class IconsPaintingEditor {
     this.bottomNavBar = Icons.edit_outlined,
     this.lineWeight = Icons.line_weight_rounded,
     this.freeStyle = Icons.edit,
+    this.mosaic = Icons.auto_awesome_mosaic,
     this.arrow = Icons.arrow_right_alt_outlined,
     this.line = Icons.horizontal_rule,
     this.fill = Icons.format_color_fill,

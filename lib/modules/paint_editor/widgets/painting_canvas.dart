@@ -107,7 +107,7 @@ class PaintingCanvasState extends State<PaintingCanvas> {
         _paintCtrl.setStart(offset);
       }
 
-      if (_paintCtrl.mode == PaintModeE.freeStyle) {
+      if (_paintCtrl.mode == PaintModeE.freeStyle||_paintCtrl.mode == PaintModeE.mosaic) {
         _paintCtrl.addOffsets(offset);
       }
 
@@ -133,7 +133,7 @@ class PaintingCanvasState extends State<PaintingCanvas> {
     List<Offset?>? offsets;
 
     if (_paintCtrl.start != null && _paintCtrl.end != null) {
-      if (_paintCtrl.mode == PaintModeE.freeStyle) {
+      if (_paintCtrl.mode == PaintModeE.freeStyle||_paintCtrl.mode == PaintModeE.mosaic) {
         offsets = [..._paintCtrl.offsets];
       } else if (_paintCtrl.start != null && _paintCtrl.end != null) {
         offsets = [_paintCtrl.start, _paintCtrl.end];
@@ -169,7 +169,7 @@ class PaintingCanvasState extends State<PaintingCanvas> {
               opacity: item.opacity,
               child: CustomPaint(
                 willChange: false,
-                isComplex: item.mode == PaintModeE.freeStyle,
+                isComplex: item.mode == PaintModeE.freeStyle||item.mode == PaintModeE.mosaic,
                 painter: DrawPainting(
                   item: item,
                   freeStyleHighPerformance: widget.freeStyleHighPerformance,

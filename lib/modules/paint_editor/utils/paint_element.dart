@@ -3,10 +3,12 @@ import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../models/paint_editor/painted_model.dart';
 import 'paint_editor_enum.dart';
+import 'dart:ui' as ui;
 
 class PaintElement {
   /// Draws an element on a canvas based on the specified mode and parameters.
@@ -39,6 +41,13 @@ class PaintElement {
     Offset? end = item.offsets[1];
 
     switch (mode) {
+      case PaintModeE.mosaic:
+        _drawMosaicStyle(
+          offsets: offsets,
+          canvas: canvas,
+          painter: painter,
+        );
+        break;
       case PaintModeE.freeStyle:
         _drawFreeStyle(
           offsets: offsets,
@@ -72,6 +81,42 @@ class PaintElement {
     }
   }
 
+  void paintMosaic(Canvas canvas, Offset center, Paint painter) {
+    final ui.Paint paint = ui.Paint()..color = painter.color;
+    final double size = painter.strokeWidth;
+    final double halfSize = size / 2;
+    final ui.Rect b1 = Rect.fromCenter(
+        center: center.translate(-halfSize, -halfSize),
+        width: size,
+        height: size);
+    //0,0
+    canvas.drawRect(b1, paint);
+    paint.color = Colors.grey.withOpacity(0.5);
+    //0,1
+    canvas.drawRect(b1.translate(0, size), paint);
+    paint.color = Colors.black38;
+    //0,2
+    canvas.drawRect(b1.translate(0, size * 2), paint);
+    paint.color = Colors.black12;
+    //1,0
+    canvas.drawRect(b1.translate(size, 0), paint);
+    paint.color = Colors.black26;
+    //1,1
+    canvas.drawRect(b1.translate(size, size), paint);
+    paint.color = Colors.black45;
+    //1,2
+    canvas.drawRect(b1.translate(size, size * 2), paint);
+    paint.color = Colors.grey.withOpacity(0.5);
+    //2,0
+    canvas.drawRect(b1.translate(size * 2, 0), paint);
+    paint.color = Colors.black12;
+    //2,1
+    canvas.drawRect(b1.translate(size * 2, size), paint);
+    paint.color = Colors.black26;
+    //2,2
+    canvas.drawRect(b1.translate(size * 2, size * 2), paint);
+  }
+
   /// Draws freehand lines on a canvas.
   ///
   /// This function takes a list of [offsets] representing points and draws freehand
@@ -94,7 +139,6 @@ class PaintElement {
     painter.strokeCap = StrokeCap.round;
     if (!freeStyleHighPerformance) {
       final path = Path();
-
       for (int i = 0; i < offsets.length - 1; i++) {
         final currentOffset = offsets[i];
         final nextOffset = offsets[i + 1];
@@ -112,11 +156,12 @@ class PaintElement {
       final path = Path();
 
       for (int i = 0; i < offsets.length - 1; i++) {
-        if (offsets[i] != null && offsets[i + 1] != null) {
+        final currentOffset = offsets[i];
+        final nextOffset = offsets[i + 1];
+        if (currentOffset != null && nextOffset != null) {
           final startPoint =
-              Offset(offsets[i]!.dx * scale, offsets[i]!.dy * scale);
-          final endPoint =
-              Offset(offsets[i + 1]!.dx * scale, offsets[i + 1]!.dy * scale);
+              Offset(currentOffset.dx * scale, currentOffset.dy * scale);
+          final endPoint = Offset(nextOffset.dx * scale, nextOffset.dy * scale);
 
           if (i == 0) {
             path.moveTo(startPoint.dx, startPoint.dy);
@@ -129,6 +174,19 @@ class PaintElement {
       }
 
       canvas.drawPath(path, painter);
+    }
+  }
+
+  void _drawMosaicStyle({
+    required List<Offset?> offsets,
+    required Canvas canvas,
+    required Paint painter,
+  }) {
+    for (int i = 0; i < offsets.length - 1; i = i + 2) {
+      final currentOffset = offsets[i];
+      if (currentOffset != null) {
+        paintMosaic(canvas, currentOffset, painter);
+      }
     }
   }
 

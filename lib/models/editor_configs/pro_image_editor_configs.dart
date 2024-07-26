@@ -71,6 +71,7 @@ class ProImageEditorConfigs {
 
   /// Configuration options for the Paint Editor.
   final PaintEditorConfigs paintEditorConfigs;
+  final PaintEditorConfigs mosaicEditorConfigs;
 
   /// Configuration options for the Text Editor.
   final TextEditorConfigs textEditorConfigs;
@@ -134,6 +135,7 @@ class ProImageEditorConfigs {
     this.imageGenerationConfigs = const ImageGeneratioConfigs(),
     this.mainEditorConfigs = const MainEditorConfigs(),
     this.paintEditorConfigs = const PaintEditorConfigs(),
+    this.mosaicEditorConfigs = const PaintEditorConfigs(),
     this.textEditorConfigs = const TextEditorConfigs(),
     this.cropRotateEditorConfigs = const CropRotateEditorConfigs(),
     this.filterEditorConfigs = const FilterEditorConfigs(),

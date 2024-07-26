@@ -238,6 +238,12 @@ class PaintingEditorState extends State<PaintingEditor>
             icon: icons.paintingEditor.freeStyle,
             label: i18n.paintEditor.freestyle,
           ),
+        if (paintEditorConfigs.hasOptionMosaic)
+          PaintModeBottomBarItem(
+            mode: PaintModeE.mosaic,
+            icon: icons.paintingEditor.mosaic,
+            label: i18n.paintEditor.mosaic,
+          ),
         if (paintEditorConfigs.hasOptionArrow)
           PaintModeBottomBarItem(
             mode: PaintModeE.arrow,
@@ -610,6 +616,7 @@ class PaintingEditorState extends State<PaintingEditor>
       Size size = layerRect.size;
 
       bool onlyStrokeMode = e.mode == PaintModeE.freeStyle ||
+          e.mode == PaintModeE.mosaic ||
           e.mode == PaintModeE.line ||
           e.mode == PaintModeE.dashLine ||
           e.mode == PaintModeE.arrow ||
@@ -712,8 +719,8 @@ class PaintingEditorState extends State<PaintingEditor>
           onPressed: close,
         ),
         ...[
-          if (constraints.maxWidth >= 300) ...[
-            if (constraints.maxWidth >= 380) const SizedBox(width: 80),
+          if (constraints.maxWidth >= 360) ...[
+            if (constraints.maxWidth >= 420) const SizedBox(width: 80),
             const Spacer(),
             if (paintEditorConfigs.canChangeLineWidth)
               StreamBuilder(
