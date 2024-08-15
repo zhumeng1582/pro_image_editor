@@ -2,6 +2,8 @@
 import 'dart:ui';
 
 // Project imports:
+import 'package:flutter/material.dart';
+
 import '../../../models/paint_editor/painted_model.dart';
 import 'paint_editor_enum.dart';
 
@@ -40,6 +42,13 @@ class PaintElement {
     Offset? end = item.offsets[1];
 
     switch (mode) {
+      case PaintModeE.mosaic:
+        _drawMosaicStyle(
+          offsets: offsets,
+          canvas: canvas,
+          painter: painter,
+        );
+        break;
       case PaintModeE.freeStyle:
         _drawFreeStyle(
           offsets: offsets,
@@ -71,6 +80,42 @@ class PaintElement {
       default:
         throw ArgumentError('$mode is not a valid PaintModeE');
     }
+  }
+
+  void paintMosaic(Canvas canvas, Offset center, Paint painter) {
+    final Paint paint = Paint()..color = painter.color;
+    final double size = painter.strokeWidth;
+    final double halfSize = size / 2;
+    final Rect b1 = Rect.fromCenter(
+        center: center.translate(-halfSize, -halfSize),
+        width: size,
+        height: size);
+    //0,0
+    canvas.drawRect(b1, paint);
+    paint.color = Colors.grey.withOpacity(0.5);
+    //0,1
+    canvas.drawRect(b1.translate(0, size), paint);
+    paint.color = Colors.black38;
+    //0,2
+    canvas.drawRect(b1.translate(0, size * 2), paint);
+    paint.color = Colors.black12;
+    //1,0
+    canvas.drawRect(b1.translate(size, 0), paint);
+    paint.color = Colors.black26;
+    //1,1
+    canvas.drawRect(b1.translate(size, size), paint);
+    paint.color = Colors.black45;
+    //1,2
+    canvas.drawRect(b1.translate(size, size * 2), paint);
+    paint.color = Colors.grey.withOpacity(0.5);
+    //2,0
+    canvas.drawRect(b1.translate(size * 2, 0), paint);
+    paint.color = Colors.black12;
+    //2,1
+    canvas.drawRect(b1.translate(size * 2, size), paint);
+    paint.color = Colors.black26;
+    //2,2
+    canvas.drawRect(b1.translate(size * 2, size * 2), paint);
   }
 
   /// Draws freehand lines on a canvas.
@@ -133,6 +178,19 @@ class PaintElement {
       }
 
       canvas.drawPath(path, painter);
+    }
+  }
+
+  void _drawMosaicStyle({
+    required List<Offset?> offsets,
+    required Canvas canvas,
+    required Paint painter,
+  }) {
+    for (int i = 0; i < offsets.length - 1; i = i + 2) {
+      final currentOffset = offsets[i];
+      if (currentOffset != null) {
+        paintMosaic(canvas, currentOffset, painter);
+      }
     }
   }
 

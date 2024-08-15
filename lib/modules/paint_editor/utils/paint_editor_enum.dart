@@ -5,6 +5,8 @@ enum PaintModeE {
   moveAndZoom,
 
   /// Allows freehand drawing.
+  mosaic,
+  /// Allows freehand drawing.
   freeStyle,
 
   /// Draws a straight line between two points.

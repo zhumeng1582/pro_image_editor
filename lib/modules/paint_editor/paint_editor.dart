@@ -244,6 +244,12 @@ class PaintingEditorState extends State<PaintingEditor>
             icon: icons.paintingEditor.freeStyle,
             label: i18n.paintEditor.freestyle,
           ),
+        if (paintEditorConfigs.hasOptionMosaic)
+          PaintModeBottomBarItem(
+            mode: PaintModeE.mosaic,
+            icon: icons.paintingEditor.mosaic,
+            label: i18n.paintEditor.mosaic,
+          ),
         if (paintEditorConfigs.hasOptionArrow)
           PaintModeBottomBarItem(
             mode: PaintModeE.arrow,

@@ -38,6 +38,7 @@ class PaintEditorConfigs {
     this.editorMinScale = 1.0,
     this.editorMaxScale = 5.0,
     this.hasOptionFreeStyle = true,
+    this.hasOptionMosaic = true,
     this.hasOptionArrow = true,
     this.hasOptionLine = true,
     this.hasOptionRect = true,
@@ -80,6 +81,7 @@ class PaintEditorConfigs {
 
   /// Indicating whether the free-style drawing option is available.
   final bool hasOptionFreeStyle;
+  final bool hasOptionMosaic;
 
   /// Indicating whether the arrow drawing option is available.
   final bool hasOptionArrow;

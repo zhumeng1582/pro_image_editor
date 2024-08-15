@@ -417,7 +417,7 @@ class _LayerWidgetState extends State<LayerWidget>
           child: CustomPaint(
             size: layer.size,
             willChange: false,
-            isComplex: layer.item.mode == PaintModeE.freeStyle,
+            isComplex: layer.item.mode == PaintModeE.freeStyle||layer.item.mode == PaintModeE.mosaic,
             painter: DrawPainting(
               item: layer.item,
               scale: widget.layerData.scale,

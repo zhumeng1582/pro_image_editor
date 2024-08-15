@@ -33,6 +33,7 @@ class I18nPaintingEditor {
     this.moveAndZoom = 'Zoom',
     this.bottomNavigationBarText = 'Paint',
     this.freestyle = 'Freestyle',
+    this.mosaic = 'Mosaic',
     this.arrow = 'Arrow',
     this.line = 'Line',
     this.rectangle = 'Rectangle',
@@ -64,6 +65,7 @@ class I18nPaintingEditor {
 
   /// Text for the "Freestyle" painting mode.
   final String freestyle;
+  final String mosaic;
 
   /// Text for the "Arrow" painting mode.
   final String arrow;

@@ -73,7 +73,7 @@ class PaintingController extends ChangeNotifier {
   /// painting.
   PaintedModel get paintedModel => PaintedModel(
         mode: mode,
-        offsets: mode == PaintModeE.freeStyle ? offsets : [start, end],
+        offsets: mode == PaintModeE.freeStyle|| mode == PaintModeE.mosaic? offsets : [start, end],
         color: color,
         strokeWidth: strokeWidth,
         fill: fill,
